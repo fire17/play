@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f1117">
+<title>🎮 המשחקים שלי</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0f1117;--ink:#fff;--soft:#ffffffcc;--panel:#1a1e2b}
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html,body{min-height:100%;background:var(--bg);color:var(--ink);font-family:Rubik,system-ui,sans-serif}
+  body{overflow-x:hidden;background:radial-gradient(900px 500px at 50% -15%,#26305a 0%,transparent 65%),var(--bg);
+       padding:max(14px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(14px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
+  .wrap{max-width:1200px;margin:0 auto;min-height:calc(100vh - 28px);display:flex;flex-direction:column;gap:14px}
+  header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  h1{font-size:clamp(26px,6vw,44px);font-weight:900;line-height:1.1}
+  h1 small{display:block;font-size:13px;font-weight:500;opacity:.6;margin-top:4px}
+  .gear{flex:none;width:48px;height:48px;border-radius:50%;border:2px solid #ffffff30;background:#ffffff14;color:#fff;font-size:24px;cursor:pointer}
+  .gear:active{transform:scale(.92)}
+  /* tablet / desktop landscape: 3 on top, 2 centred below */
+  .grid{flex:1;display:grid;gap:16px;grid-template-columns:repeat(6,1fr);grid-auto-rows:minmax(150px,1fr);align-content:stretch}
+  .grid .card{grid-column:span 2}
+  .grid .card:nth-child(4){grid-column:2 / span 2}
+  /* tablet portrait: 2 + 2 + 1 centred, filling the height */
+  @media (min-width:600px) and (orientation:portrait){
+    .grid{grid-template-columns:repeat(4,1fr);grid-auto-rows:minmax(150px,1fr);align-content:stretch}
+    .grid .card:nth-child(4){grid-column:span 2}
+    .grid .card:nth-child(5){grid-column:2 / span 2}
+  }
+  .txt{display:flex;flex-direction:column;align-items:inherit;gap:4px}
+  .card{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:8px;
+        min-height:150px;padding:18px 14px;border-radius:26px;color:#fff;text-decoration:none;overflow:hidden;
+        background:linear-gradient(145deg,var(--c1),var(--c2));box-shadow:0 8px 0 #0006,0 14px 30px #0005;transition:transform .12s}
+  .card:active{transform:translateY(4px) scale(.98);box-shadow:0 4px 0 #0006}
+  .card:focus-visible{outline:4px solid #ffd23f;outline-offset:3px}
+  .emo{font-size:clamp(48px,9vw,72px);line-height:1;filter:drop-shadow(0 4px 6px #0005)}
+  .name{font-size:clamp(22px,4vw,30px);font-weight:900;text-shadow:0 2px 4px #0005}
+  .line{font-size:15px;font-weight:500;color:var(--soft);line-height:1.3}
+  .drive{--c1:#2bb673;--c2:#13795b} .space{--c1:#6d4aff;--c2:#2a1f8f} .technog{--c1:#ffb020;--c2:#e0650b}
+  .letters{--c1:#ff5d8f;--c2:#b8246a} .goal{--c1:#2f9fe8;--c2:#14569e}
+  /* phone portrait: one big row per game */
+  @media (max-width:599px){
+    .grid{grid-template-columns:1fr;gap:12px}
+    .card{flex-direction:row;justify-content:flex-start;text-align:start;min-height:96px;padding:12px 18px;gap:16px}
+    .grid{grid-auto-rows:1fr;align-content:stretch}
+    .grid .card,.grid .card:nth-child(n){grid-column:auto}
+    .card .txt{align-items:flex-start;gap:2px}
+  }
+  /* phone landscape: all five side by side */
+  @media (min-width:600px) and (max-height:520px) and (orientation:landscape){
+    .grid{grid-template-columns:repeat(5,1fr);grid-auto-rows:1fr;align-content:stretch;gap:10px}
+    .grid .card,.grid .card:nth-child(n){grid-column:auto}
+    .card{min-height:0;padding:12px 8px;border-radius:22px}
+    .emo{font-size:48px} .name{font-size:21px} .line{font-size:13px}
+    .wrap{gap:10px}
+  }
+  dialog{margin:auto;border:none;border-radius:24px;background:var(--panel);color:#fff;padding:22px;width:min(92vw,380px);box-shadow:0 20px 60px #000a}
+  dialog::backdrop{background:#000a}
+  dialog h2{font-size:24px;font-weight:900;margin-bottom:14px}
+  dialog label{display:block;font-size:18px;font-weight:700;margin-bottom:8px}
+  dialog input[type=range]{width:100%;height:34px;accent-color:#ffd23f}
+  dialog .val{font-size:20px;font-weight:900;color:#ffd23f}
+  dialog p{font-size:16px;line-height:1.45;opacity:.85;margin:12px 0 18px}
+  dialog button{width:100%;padding:12px;border:none;border-radius:16px;background:#ffd23f;color:#1a1300;font:900 20px Rubik,system-ui,sans-serif;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🎮 המשחקים שלי<small>גרסה 1.0</small></h1>
+    <button class="gear" id="gear" type="button" aria-label="הגדרות" title="הגדרות">⚙️</button>
+  </header>
+  <main class="grid" id="grid">
+    <a class="card drive" data-game="drive" href="https://drive.akeyo.io/"><span class="emo">🚙</span><span class="txt"><span class="name">נהג צעיר</span><span class="line">נוסעים בכביש ולומדים לנהוג</span></span></a>
+    <a class="card space" data-game="space" href="https://space.akeyo.io/"><span class="emo">🚀</span><span class="txt"><span class="name">חללית</span><span class="line">טסים בחלל בין הכוכבים</span></span></a>
+    <a class="card technog" data-game="technog" href="https://technog.akeyo.io/"><span class="emo">💡</span><span class="txt"><span class="name">טכנוג</span><span class="line">טיפ טכנולוגי חדש בכל יום</span></span></a>
+    <a class="card letters" data-game="letters" href="https://letters.akeyo.io/"><span class="emo">🔤</span><span class="txt"><span class="name">אותיות</span><span class="line">מוצאים את המילה הנכונה</span></span></a>
+    <a class="card goal" data-game="goal" href="https://goal.akeyo.io/"><span class="emo">⚽</span><span class="txt"><span class="name">גול!</span><span class="line">בועטים פנדלים לשער</span></span></a>
+  </main>
+</div>
+<dialog id="dlg">
+  <h2>⚙️ הגדרות</h2>
+  <label for="vol">🔊 עוצמת קול: <span class="val" id="volVal">30%</span></label>
+  <input type="range" id="vol" min="0" max="100" step="5" value="30">
+  <p>כל משחק שומר את ההגדרות שלו 🙂 אם משהו רועש מדי או שקט מדי, אפשר לשנות גם בתוך המשחק עצמו.</p>
+  <button type="button" id="close">סגור ✓</button>
+</dialog>
+<script>
+(function(){
+  "use strict";
+  var KEY = "playSettings";
+  // Inside the Android app (user-agent suffix or the bundled asset host). Links stay on the live sites;
+  // the app itself falls back to its bundled copy of a game when it is offline.
+  var inApp = / AkeyoPlayApp/.test(navigator.userAgent) || location.hostname === "appassets.androidplatform.net";
+  if (inApp) document.documentElement.setAttribute("data-app", "1");
+
+  function load(){
+    var s = { volume: 30 };
+    try {
+      var raw = localStorage.getItem(KEY);
+      if (raw) { var o = JSON.parse(raw); if (o && typeof o.volume === "number" && o.volume >= 0 && o.volume <= 100) s.volume = o.volume; }
+    } catch (e) {}
+    return s;
+  }
+  function save(s){ try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} }
+
+  var settings = load();
+  var dlg = document.getElementById("dlg"), vol = document.getElementById("vol"), volVal = document.getElementById("volVal");
+  function show(){ vol.value = settings.volume; volVal.textContent = settings.volume + "%"; }
+  show();
+  vol.addEventListener("input", function(){ settings.volume = Number(vol.value); volVal.textContent = settings.volume + "%"; save(settings); });
+  document.getElementById("gear").addEventListener("click", function(){
+    show();
+    if (typeof dlg.showModal === "function") dlg.showModal(); else dlg.setAttribute("open", "");
+  });
+  document.getElementById("close").addEventListener("click", function(){
+    if (typeof dlg.close === "function") dlg.close(); else dlg.removeAttribute("open");
+  });
+
+  if (!inApp && "serviceWorker" in navigator) {
+    try { navigator.serviceWorker.register("./sw.js").catch(function(){}); } catch (e) {}
+  }
+})();
+</script>
+</body>
+</html>
